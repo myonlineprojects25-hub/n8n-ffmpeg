@@ -23,4 +23,8 @@ RUN curl -L -o /tmp/ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/releases/ffmp
     && chmod +x /usr/local/bin/ffmpeg /usr/local/bin/ffprobe \
     && rm -rf /tmp/ffmpeg.tar.xz /tmp/ffmpeg-extract
 
-USER node
+# L'image de base n8nio/n8n se termine normalement par USER node. On force
+# explicitement root ici : c'est EasyPanel qui impose l'utilisateur d'exécution
+# du conteneur, et le conflit entre les deux causait "failed switching to node:
+# operation not permitted" au démarrage.
+USER root
